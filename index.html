@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8"> 
+    <style type="text/css"><
+      canvas { border: 1px solid #000; }
+    </style>
+	<script type="text/javascript">
+		var canvas;
+		var context;
+		var counter =0;
+		var down = false;
+		var temp_x, temp_y, center_x, center_y;
+		function clearCanvas() {
+		    context.clearRect(0, 0, canvas.width, canvas.height);
+		}
+		function line(x1, y1, x2, y2) {
+			context.beginPath();
+		    context.moveTo(x1, y1);
+		    context.lineTo(x2, y2);
+		    context.strokeStyle = "#" + document.getElementById("hex").value;
+			context.lineWidth = document.getElementById("width").value;
+			context.stroke();
+		}
+		window.addEventListener('load', function () {
+	        canvas = document.getElementById('canvas');
+			center_x = canvas.width;
+			center_y = canvas.height;
+	        context = canvas.getContext('2d');
+			canvas.addEventListener('mousedown', function(){ down = true }, false);
+			canvas.addEventListener('mouseup', function(){ down = false }, false);
+		    canvas.addEventListener('mousemove', function (ev) {
+				var x = ev.layerX || ev.offsetX;
+				var y = ev.layerY || ev.offsetY;
+				if(down){
+					line(temp_x, temp_y, x, y);
+					line(center_x - temp_x, center_y - temp_y, center_x - x, center_y - y);
+					line(center_x - temp_x, temp_y, center_x - x, y);
+					line(temp_x, center_y - temp_y, x, center_y - y);
+					counter += 1;
+				}
+		        temp_x = x;
+		        temp_y = y;
+			}, false);
+		}, false);
+	</script>
+  </head>
+  <body>
+	<script type="text/javascript" src="jscolor/jscolor.js"></script>
+	<canvas style="outline:#00FF00 solid thick;" id="canvas" width="960" height="300"></canvas><br>
+	<input id="hex" class="color" value="66ff00">
+	<input type="text" id="width" placeholder="Width" title="Width">
+	<input type="button" value="Clear" onclick="clearCanvas()">
+	<div style="font-size:30px">Start dragging your mouse around inside the green box to draw and your drawing will be duplicated in 4 quadrants.</div>
+  </body>
+</html>
