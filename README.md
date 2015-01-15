@@ -1,2 +1,2 @@
-View at <a href="http://tombousso.me/RangoliDraw">/RangoliDraw</a>
+View at <a href="http://tombousso.github.io/RangoliDraw">/RangoliDraw</a>
 ====================
